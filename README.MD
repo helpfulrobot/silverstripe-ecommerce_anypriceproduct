@@ -1,15 +1,12 @@
 ###############################################
-alternative product group
+Ecommerce Any Price Product
 Pre 0.1 proof of concept
 ###############################################
 
-Adds an alternative product group page to the
-e-commerce application.  For the customer this
-means (s)he can view products in a different
-view than the traditional, original product group.
+This module adds a "product" to e-commerce where
+the customer can determine the price of the product.
 
-An example would be to view the products by brand
-rather than by type.
+A typical example of this would be a "donation" product.
 
 Developers
 -----------------------------------------------
@@ -19,6 +16,7 @@ Nicolaas Francken [at] sunnysideup.co.nz
 Requirements
 -----------------------------------------------
 Ecommerce 1.0+ / SSU Branch
+ecommerce_product_variation
 SilverStripe 2.4+
 
 Project Home
