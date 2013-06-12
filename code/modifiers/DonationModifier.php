@@ -26,8 +26,8 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 	}
 
 	protected function LiveDonations() {
-		$country = EcommerceCountry::get_country_from_ip();
-		$donations = DataObject::get('DonationOption', "FIND_IN_SET($country->ID, `Countries`) > 0");
+		$country = EcommerceCountry::get_country();
+		$donations = DataObject::get('DonationOption', "FIND_IN_SET('$country', `Countries`) > 0");
 		if(! $donations) {
 			$donations = DataObject::get('DonationOption', "`Countries` IS NULL");
 		}

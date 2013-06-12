@@ -9,7 +9,7 @@ class DonationOption extends DataObject {
 
 	function getCMSFields() {
 		$fields = parent::getCMSFields();
-		$countries = DataObject::get('EcommerceCountry')->map('ID', 'Name');
+		$countries = DataObject::get('EcommerceCountry')->map('Code', 'Name');
 		$fields->addFieldToTab('Root.Main', new CheckboxSetField('Countries', null, $countries));
 		return $fields;
 	}
