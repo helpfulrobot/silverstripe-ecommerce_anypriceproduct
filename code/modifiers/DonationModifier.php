@@ -8,7 +8,7 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 
 	function getModifierForm($optionalController = null, $optionalValidator = null) {
 		$form = parent::getModifierForm($optionalController, $optionalValidator);
-		$donations = DataObject::get('DonationOption');
+		$donations = $this->LiveDonations();
 		$fields = $form->Fields();
 		if($donations) {
 			$field = $fields->fieldByName('AddDonation');
@@ -23,6 +23,15 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 		$form = new DonationModifier_Form($form->Controller(), 'DonationModifier', $fields, $form->Actions(), $form->getValidator());
 		$form->addExtraClass('anyPriceRoundUpDonationModifier');
 		return $form;
+	}
+
+	protected function LiveDonations() {
+		$country = EcommerceCountry::get_country_from_ip();
+		$donations = DataObject::get('DonationOption', "FIND_IN_SET($country->ID, `Countries`) > 0");
+		if(! $donations) {
+			$donations = DataObject::get('DonationOption', "`Countries` IS NULL");
+		}
+		return $donations;
 	}
 
 	public function updateAddDonation($donationID) {
