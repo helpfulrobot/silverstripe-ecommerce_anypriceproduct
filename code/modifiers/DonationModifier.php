@@ -6,6 +6,23 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 		'Donation' => 'DonationOption'
 	);
 
+	/**
+	 * standard OrderModifier Method
+	 * Should we show a form in the checkout page for this modifier?
+	 */
+	public function ShowForm() {
+		/*$ajaxObject = $this->AJAXDefinitions();
+		//TableValue is a database value
+		$tableID = $ajaxObject->TableID();
+		if(!$this->hasDonation()) {
+			Requirements::customScript("jQuery(document).ready(function() {jQuery(\"#".$tableID."\").hide();});", "hide$tableID");
+		}*/
+		$options = $this->LiveDonations();
+		if($options && $options->count()) {
+			return parent::ShowForm();
+		}
+	}
+
 	function getModifierForm($optionalController = null, $optionalValidator = null) {
 		$form = parent::getModifierForm($optionalController, $optionalValidator);
 		$donations = $this->LiveDonations();
@@ -27,10 +44,7 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 
 	protected function LiveDonations() {
 		$country = EcommerceCountry::get_country();
-		$donations = DataObject::get('DonationOption', "FIND_IN_SET('$country', `Countries`) > 0");
-		if(! $donations) {
-			$donations = DataObject::get('DonationOption', "`Countries` IS NULL");
-		}
+		$donations = DataObject::get('DonationOption', "FIND_IN_SET('$country', `Countries`) > 0 OR `Countries` IS NULL");
 		return $donations;
 	}
 

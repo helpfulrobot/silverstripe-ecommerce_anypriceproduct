@@ -190,7 +190,7 @@ class AnyPriceRoundUpDonationModifier extends OrderModifier {
 		if($this->Order()->IsSubmitted()) {
 			return $this->TableValue > 0;
 		}
-		return true;
+		return $this->ShowForm();
 	}
 
 	/**
