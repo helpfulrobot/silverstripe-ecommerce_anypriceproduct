@@ -30,9 +30,11 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 		if($donations) {
 			$field = $fields->fieldByName('AddDonation');
 			$title = $field->Title();
-			$source = $field->getSource();
+			$source = array(
+				_t("DonationModifier.NO", 'Not today')
+			);
 			$fields->removeByName('AddDonation');
-			unset($source[1]);
+			$this->extend('UpdateDonations', $donations);
 			$donations = $donations->map();
 			$source += $donations;
 			$fields->push(new DropdownField('DonationID', $title, $source, $this->DonationID));
@@ -62,6 +64,8 @@ class DonationModifier extends AnyPriceRoundUpDonationModifier {
 			return parent::LiveName();
 		}
 	}
+
+
 }
 
 class DonationModifier_Form extends OrderModifierForm {
